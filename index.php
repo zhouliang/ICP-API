@@ -21,7 +21,7 @@ if (!$token) {
 } elseif (!$icp) {
     $icp = "未备案";
     $msg = "查询成功";
-    $name = "未备案";
+    $natureName = "未备案";
     $code = "1";
 } else {
     $msg = "查询成功";
