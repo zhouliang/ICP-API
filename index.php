@@ -9,7 +9,6 @@ $authKey = md5("testtest" . $timeStamp);
 $token = json_decode(curl_post("https://hlwicpfwc.miit.gov.cn/icpproject_query/api/auth", "authKey=$authKey&timeStamp=$timeStamp", "application/x-www-form-urlencoded;charset=UTF-8", "0"));
 $token = $token->params->bussiness;
 $query = json_decode(curl_post("https://hlwicpfwc.miit.gov.cn/icpproject_query/api/icpAbbreviateInfo/queryByCondition", '{"pageNum":"","pageSize":"","unitName":"' . $domain . '"}', "application/json;charset=UTF-8", $token));
-$msg = $query->msg;
 $query = json_encode($query->params->list);
 $query = str_replace("[", "", $query);
 $query = json_decode(str_replace("]", "", $query));
@@ -37,6 +36,7 @@ $result = array(
 );
 print_r(json_encode($result, JSON_UNESCAPED_UNICODE));
 function curl_post($url, $data, $Content, $token) {
+    $ip = "101.".mt_rand(1,255).".".mt_rand(1,255).".".mt_rand(1,255);
     $ch = curl_init();
     $headers = array(
         "Content-Type: $Content",
@@ -44,8 +44,8 @@ function curl_post($url, $data, $Content, $token) {
         "Referer: https://beian.miit.gov.cn/",
         "token: $token",
         "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36 SE 2.X MetaSr 1.0",
-        "CLIENT-IP: 101.91.".mt_rand(1,255).".".mt_rand(1,255),
-        "X-FORWARDED-FOR: 101.91.".mt_rand(1,255).".".mt_rand(1,255)
+        "CLIENT-IP: $ip",
+        "X-FORWARDED-FOR: $ip"
     );
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
