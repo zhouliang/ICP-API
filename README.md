@@ -1,7 +1,6 @@
 ICP备案信息查询API接口  
 采用管局官网备案接口，事实同步最新ICP备案数据
   
-authKey是根据时间戳生成的，目前会不会失效不清楚，失效了可以去官网提取下新的  
 请求示例：https://check.lzfh.com/api/icp.php?domain=  
 请求方式：get  
 请求参数：domain=需查询的域名，可以包含http或二级  
