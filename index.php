@@ -16,12 +16,12 @@ $icp = $query->serviceLicence;
 $unitName = $query->unitName;
 $natureName = $query->natureName;
 if (!$token) {
-    $msg = "查询失败，查询频率过高！";
+    $icp = "查询频率过高，请稍后再试";
+    $msg = "查询失败";
     $code = "0";
 } elseif (!$icp) {
     $icp = "未备案";
     $msg = "查询成功";
-    $natureName = "未备案";
     $code = "1";
 } else {
     $msg = "查询成功";
