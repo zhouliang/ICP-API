@@ -33,7 +33,7 @@ $result = array(
     'msg' => $msg,
     'result' => $code
 );
-print_r(json_encode($result));
+print_r(json_encode($result, JSON_UNESCAPED_UNICODE));
 function curl_post($url, $data, $Content, $token) {
     $ch = curl_init();
     $headers = array(
