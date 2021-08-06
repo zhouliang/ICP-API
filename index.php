@@ -16,7 +16,7 @@ $icp = $query->serviceLicence;
 $unitName = $query->unitName;
 $natureName = $query->natureName;
 if (!$token) {
-    $msg = "查询失败，authKey有误";
+    $msg = "查询失败，查询频率过高！";
     $code = "0";
 } elseif (!$icp) {
     $icp = $msg;
