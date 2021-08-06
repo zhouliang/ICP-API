@@ -6,10 +6,6 @@ header("Content-Type:text/html,application/json; charset=utf-8");
 $domain = getTopHost($_GET['domain']);
 $token = json_decode(curl_post("https://hlwicpfwc.miit.gov.cn/icpproject_query/api/auth", "authKey=47bcf4479be8fe37be9a70d261e5c493&timeStamp=1628221018878", "application/x-www-form-urlencoded;charset=UTF-8", "0"));
 $token = $token->params->bussiness;
-if (!$token) {
-    $msg = "查询失败，authKey有误";
-    $code = "0";
-}
 $query = json_decode(curl_post("https://hlwicpfwc.miit.gov.cn/icpproject_query/api/icpAbbreviateInfo/queryByCondition", '{"pageNum":"","pageSize":"","unitName":"' . $domain . '"}', "application/json;charset=UTF-8", $token));
 $query = json_encode($query->params->list);
 $query = str_replace("[", "", $query);
@@ -17,11 +13,14 @@ $query = json_decode(str_replace("]", "", $query));
 $icp = $query->serviceLicence;
 $unitName = $query->unitName;
 $natureName = $query->natureName;
-if (!$icp) {
+if (!$token) {
+    $msg = "查询失败，authKey有误";
+    $code = "0";
+} elseif (!$icp) {
     $icp = "无备案信息";
     $msg = "查询成功";
     $name = "未备案";
-    $code = "0";
+    $code = "1";
 } else {
     $msg = "查询成功";
     $code = "1";
