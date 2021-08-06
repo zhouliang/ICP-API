@@ -19,7 +19,7 @@ if (!$token) {
     $msg = "查询失败，查询频率过高！";
     $code = "0";
 } elseif (!$icp) {
-    $icp = $msg;
+    $icp = "未备案";
     $msg = "查询成功";
     $name = "未备案";
     $code = "1";
