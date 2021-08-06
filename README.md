@@ -3,7 +3,7 @@ ICP备案信息查询API接口
   
 请求示例：https://check.lzfh.com/api/icp.php?domain=  
 请求方式：get  
-请求参数：domain=需查询的域名  
+请求参数：domain=需查询的域名，可以包含http或二级  
 返回示例：  
 {  
 	"icp": "粤B2-20090059-5",  
