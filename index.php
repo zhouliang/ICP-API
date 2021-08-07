@@ -10,9 +10,9 @@ if ($_GET['domain']) {
 }
 $timeStamp = time();
 $authKey = md5("testtest" . $timeStamp);
-$token = json_decode(curl_post("https://hlwicpfwc.miit.gov.cn/icpproject_query/api/auth", "authKey=$authKey&timeStamp=$timeStamp", "application/x-www-form-urlencoded;charset=UTF-8", "0"));
+$token = json_decode(curl_post("auth", "authKey=$authKey&timeStamp=$timeStamp", "application/x-www-form-urlencoded;charset=UTF-8", "0"));
 $token = $token->params->bussiness;
-$query = json_decode(curl_post("https://hlwicpfwc.miit.gov.cn/icpproject_query/api/icpAbbreviateInfo/queryByCondition", '{"pageNum":"","pageSize":"","unitName":"' . $domain . '"}', "application/json;charset=UTF-8", $token));
+$query = json_decode(curl_post("icpAbbreviateInfo/queryByCondition", '{"pageNum":"","pageSize":"","unitName":"' . $domain . '"}', "application/json;charset=UTF-8", $token));
 $query = json_encode($query->params->list);
 $query = str_replace("[", "", $query);
 $query = json_decode(str_replace("]", "", $query));
@@ -20,7 +20,7 @@ $icp = $query->serviceLicence;
 $unitName = $query->unitName;
 $natureName = $query->natureName;
 if (!$token) {
-    $icp = "查询频率过高，请稍后再试";
+    $icp = "服务器请求频率过高，请稍后再试";
     $msg = "查询失败";
     $code = "0";
 } elseif (!$icp) {
@@ -31,14 +31,15 @@ if (!$token) {
     $msg = "查询成功";
     $code = "1";
 }
-$result = array(
+$json = array(
     'icp' => $icp,
     'unitName' => $unitName,
     'natureName' => $natureName,
     'msg' => $msg,
     'result' => $code
 );
-print_r(json_encode($result, JSON_UNESCAPED_UNICODE));
+print_r(json_encode($json, JSON_UNESCAPED_UNICODE));
+
 function curl_post($url, $data, $Content, $token) {
     $ip = "101.".mt_rand(1,255).".".mt_rand(1,255).".".mt_rand(1,255);
     $ch = curl_init();
@@ -51,7 +52,7 @@ function curl_post($url, $data, $Content, $token) {
         "CLIENT-IP: $ip",
         "X-FORWARDED-FOR: $ip"
     );
-    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_URL, "https://hlwicpfwc.miit.gov.cn/icpproject_query/api/" . $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
