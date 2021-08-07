@@ -48,7 +48,7 @@ function curl_post($url, $data, $Content, $token) {
         "Origin: https://beian.miit.gov.cn/",
         "Referer: https://beian.miit.gov.cn/",
         "token: $token",
-        "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36 SE 2.X MetaSr 1.0",
+        "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36",
         "CLIENT-IP: $ip",
         "X-FORWARDED-FOR: $ip"
     );
@@ -63,7 +63,7 @@ function curl_post($url, $data, $Content, $token) {
     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
     $content = curl_exec($ch);
     curl_close($ch);
-    return ($content);
+    return $content;
 }
 function getTopHost($url) {
     if (stristr($url, "http") === false) {
